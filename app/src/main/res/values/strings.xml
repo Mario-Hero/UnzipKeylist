@@ -75,8 +75,11 @@
     <string name="toast_copied_to_cache">%1$s: copied to a temporary folder before extraction</string>
     <string name="toast_imported_remember_save">Imported %1$d entries. Remember to save.</string>
     <string name="toast_saved">Saved %1$d passwords</string>
+    <string name="toast_cache_copies_cleaned">Temporary copies were cleaned up; please pick those archives again</string>
 
     <string name="dialog_skipped_title">These files were skipped</string>
+    <string name="dialog_undeleted_title">Originals not deleted</string>
+    <string name="dialog_undeleted_message">These original archives could not be deleted (the source may not support deletion, or write access was not granted):\n%1$s</string>
     <string name="dialog_failed_title">Some archives failed</string>
     <string name="dialog_save_password_title">Add to the password book?</string>
     <string name="dialog_save_password_message">The manual password “%1$s” worked. Save it to the password book?</string>

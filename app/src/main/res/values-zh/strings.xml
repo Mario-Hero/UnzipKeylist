@@ -75,8 +75,11 @@
     <string name="toast_copied_to_cache">%1$s：已复制到临时目录后解压</string>
     <string name="toast_imported_remember_save">已导入 %1$d 条，记得保存</string>
     <string name="toast_saved">已保存 %1$d 条密码</string>
+    <string name="toast_cache_copies_cleaned">已清理临时副本，这些条目需重新选择</string>
 
     <string name="dialog_skipped_title">以下文件被跳过</string>
+    <string name="dialog_undeleted_title">原压缩包未删除</string>
+    <string name="dialog_undeleted_message">以下原压缩包未能删除（来源可能不支持删除，或未获得写入权限）：\n%1$s</string>
     <string name="dialog_failed_title">部分文件解压失败</string>
     <string name="dialog_save_password_title">是否加入密码本？</string>
     <string name="dialog_save_password_message">手动输入的密码「%1$s」解压成功，是否保存到密码本？</string>

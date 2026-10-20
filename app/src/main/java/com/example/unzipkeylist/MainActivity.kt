@@ -1,6 +1,7 @@
 package com.example.unzipkeylist
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -37,10 +38,19 @@ class MainActivity : AppCompatActivity() {
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     private val sources = mutableListOf<ArchiveSource>()
+
+    /** 本次选择中复制到缓存目录的副本，解压完成后统一清理 */
+    private val cacheCopies = mutableListOf<File>()
     private var customDestDir: File? = null
 
+    // 同时申请写权限：云盘等来源的原文档，只有拿到写权限才删得掉
     private val pickArchives =
-        registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
+        registerForActivityResult(object : ActivityResultContracts.OpenMultipleDocuments() {
+            override fun createIntent(context: Context, input: Array<String>): Intent =
+                super.createIntent(context, input).addFlags(
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                )
+        }) { uris ->
             if (uris.isEmpty()) return@registerForActivityResult
             resetProgressAndEnableStart()
             addArchives(uris)
@@ -198,17 +208,24 @@ class MainActivity : AppCompatActivity() {
         val failed = mutableListOf<String>()
 
         for (uri in uris) {
-            val file = StorageUtils.resolveRealFile(uri) ?: copyToCache(uri)
+            val real = StorageUtils.resolveRealFile(this, uri)
+            val file = real ?: copyToCache(uri)
             if (file == null) {
                 failed.add(StorageUtils.displayName(this, uri) ?: uri.toString())
                 continue
             }
-            val source = ArchiveLocator.locate(file)
-            if (source == null) {
+            val located = ArchiveLocator.locate(file)
+            if (located == null) {
                 failed.add(getString(R.string.skip_unsupported_format, file.name))
                 continue
             }
-            found.add(source)
+            if (real == null) {
+                // 副本场景：记住原文档 URI，勾选「删除原文件」时删的是原文档而不是副本
+                cacheCopies.add(file)
+                found.add(located.copy(sourceUri = uri))
+            } else {
+                found.add(located)
+            }
         }
 
         appendSources(found)
@@ -260,6 +277,12 @@ class MainActivity : AppCompatActivity() {
         } catch (e: IOException) {
             null
         }
+    }
+
+    /** 解压完成后删掉复制到缓存的副本（解压产物不在此列） */
+    private fun clearCacheCopies() {
+        cacheCopies.forEach { runCatching { if (it.exists()) it.delete() } }
+        cacheCopies.clear()
     }
 
     private fun updateSelectedFilesText() {
@@ -373,11 +396,35 @@ class MainActivity : AppCompatActivity() {
                     .show()
             }
 
+            if (result.undeletedOriginals.isNotEmpty()) {
+                AlertDialog.Builder(this@MainActivity)
+                    .setTitle(R.string.dialog_undeleted_title)
+                    .setMessage(
+                        getString(
+                            R.string.dialog_undeleted_message,
+                            result.undeletedOriginals.joinToString("\n")
+                        )
+                    )
+                    .setPositiveButton(R.string.action_ok, null)
+                    .show()
+            }
+
             result.manualPasswordUsed?.let { askToSavePassword(it, bookPasswords) }
+
+            // 副本用完即删（即便原文档没删掉，副本也必须清掉）
+            withContext(Dispatchers.IO) { clearCacheCopies() }
 
             if (deleteOriginals) {
                 sources.clear()
                 updateSelectedFilesText()
+            } else {
+                // 本地文件已不存在的条目（副本被清理）从列表移除，需重新选择
+                val stale = sources.filter { !it.firstPart.exists() }
+                if (stale.isNotEmpty()) {
+                    sources.removeAll(stale)
+                    updateSelectedFilesText()
+                    toast(getString(R.string.toast_cache_copies_cleaned))
+                }
             }
             refreshBookStatus()
         }

@@ -1,6 +1,8 @@
 package com.example.unzipkeylist.archive
 
 import android.content.Context
+import android.net.Uri
+import android.provider.DocumentsContract
 import com.example.unzipkeylist.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,13 +19,16 @@ data class JobResult(
     val successArchives: Int,
     val failures: List<String>,
     /** 用"手动输入"的密码解压成功的那个密码（用于事后询问是否写入密码本） */
-    val manualPasswordUsed: String?
+    val manualPasswordUsed: String?,
+    /** 勾选「删除原文件」但没能删掉的原压缩包（例如来源不支持删除） */
+    val undeletedOriginals: List<String>
 )
 
 /**
  * 解压流程编排：
  * 1. 识别格式 → 2. 判断是否加密 → 3. 有手动密码先试手动，再逐条遍历密码本
- * → 4. 用命中的密码解压 → 5. 按需删除原压缩包（含全部分卷）
+ * → 4. 用命中的密码解压 → 5. 按需删除原压缩包（真实文件连分卷一起删；
+ *      缓存副本来源则删除原文档，删不掉时记录到 [JobResult.undeletedOriginals]）
  */
 class ExtractionRunner(
     private val context: Context,
@@ -38,6 +43,7 @@ class ExtractionRunner(
         deleteOriginals: Boolean
     ): JobResult = withContext(Dispatchers.IO) {
         val failures = mutableListOf<String>()
+        val undeletedOriginals = mutableListOf<String>()
         var successes = 0
         var manualPasswordUsed: String? = null
 
@@ -96,7 +102,14 @@ class ExtractionRunner(
                 }
 
                 if (deleteOriginals) {
-                    source.parts.forEach { runCatching { it.delete() } }
+                    if (source.sourceUri != null) {
+                        // 缓存副本来源：删的是原文档，副本由调用方统一清理
+                        if (!deleteSafDocument(source.sourceUri)) {
+                            undeletedOriginals.add(source.displayName)
+                        }
+                    } else {
+                        source.parts.forEach { runCatching { it.delete() } }
+                    }
                 }
                 successes++
             } catch (t: Throwable) {
@@ -112,8 +125,13 @@ class ExtractionRunner(
         }
 
         callback.onProgress(100, "")
-        JobResult(successes, failures, manualPasswordUsed)
+        JobResult(successes, failures, manualPasswordUsed, undeletedOriginals)
     }
+
+    /** 通过 SAF 删除原文档；来源不支持删除或没有写权限时返回 false */
+    private fun deleteSafDocument(uri: Uri): Boolean =
+        runCatching { DocumentsContract.deleteDocument(context.contentResolver, uri) }
+            .getOrDefault(false)
 
     private fun passwordErrorText(reason: WrongPasswordReason): String = context.getString(
         when (reason) {

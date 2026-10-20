@@ -1,5 +1,6 @@
 package com.example.unzipkeylist.archive
 
+import android.net.Uri
 import java.io.File
 
 enum class ArchiveType { ZIP, SEVEN_ZIP, RAR }
@@ -11,7 +12,12 @@ enum class ArchiveType { ZIP, SEVEN_ZIP, RAR }
 data class ArchiveSource(
     val type: ArchiveType,
     val parts: List<File>,
-    val pickedFile: File
+    val pickedFile: File,
+    /**
+     * SAF 原始文档 URI。非 null 时 [parts] 指向缓存里的副本，
+     * 此时「删除原文件」要删的是该文档，而不是缓存副本。
+     */
+    val sourceUri: Uri? = null
 ) {
     val firstPart: File get() = parts.first()
     val isSplit: Boolean get() = parts.size > 1
