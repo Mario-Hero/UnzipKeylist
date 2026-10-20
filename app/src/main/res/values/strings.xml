@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UnzipKeylist</string>
+    <string name="password_book_title">Password book</string>
+
+    <!-- 权限提示 -->
+    <string name="permission_hint">All files access is required to write results next to the archive and to read the other parts of split archives.</string>
+    <string name="action_grant">Grant</string>
+
+    <!-- 1. 选择压缩包 -->
+    <string name="section_select_archive">1. Select the file(s) to extract</string>
+    <string name="action_pick_archive">file</string>
+    <string name="action_pick_folder">folder</string>
+    <string name="option_include_subfolders">Include subfolders when picking a folder</string>
+    <string name="state_no_files_selected">No file selected</string>
+    <string name="state_selected_one">Selected: %1$s</string>
+    <string name="state_selected_many">Selected: %1$d files (%2$s)</string>
+    <string name="selected_file_item">· %1$s%2$s</string>
+    <string name="selected_file_split_tag"> (%1$d parts)</string>
+    <string name="selected_files_more">… %1$d in total</string>
+
+    <!-- 2. 密码本 -->
+    <string name="section_password_book">2. Password book (one password per line)</string>
+    <string name="password_book_summary">Items: %1$d entries (%2$s)</string>
+    <string name="action_edit_or_create">Edit / New</string>
+    <string name="action_import">Import</string>
+    <string name="action_export">Export</string>
+    <string name="label_manual_password">Manual password (optional; leave empty to use the password book only)</string>
+    <string name="hint_manual_password">Password</string>
+
+    <!-- 3. 解压位置 -->
+    <string name="section_output">3. Where to extract</string>
+    <string name="option_current_dir">Extract into the archive folder (no subfolder)</string>
+    <string name="option_custom_dir">Extract to a chosen folder</string>
+    <string name="action_pick_dir">Choose folder</string>
+    <string name="dest_dir_not_selected">No folder selected</string>
+
+    <!-- 4. 解压后处理 -->
+    <string name="section_delete_original">4. Delete the original file after a successful extraction?</string>
+    <string name="option_keep_original">Keep original</string>
+    <string name="option_delete_original">Delete original</string>
+
+    <!-- 5. 进度 -->
+    <string name="section_progress">5. Extraction progress</string>
+    <string name="progress_idle">Not started</string>
+    <string name="action_start">Start extraction</string>
+    <string name="action_done">Extraction successful</string>
+
+    <!-- 密码本编辑页 -->
+    <string name="password_count">%1$d passwords (one per line)</string>
+    <string name="hint_password_lines">One password per line</string>
+    <string name="action_save">Save and back</string>
+
+    <!-- 提示与状态 -->
+    <string name="status_preparing">Preparing…</string>
+    <string name="status_checking">%1$s Checking %2$s</string>
+    <string name="status_trying_password">%1$s Trying password %2$d/%3$d</string>
+    <string name="status_extracting_archive">%1$s Extracting %2$s</string>
+    <string name="status_extracting_entry">Extracting · %1$s</string>
+    <string name="status_progress_entry">%1$d%% · %2$s</string>
+    <string name="status_merging_split">Merging split part</string>
+    <string name="status_done_success">Done. %1$d archive(s) extracted.</string>
+    <string name="status_done_partial">%1$d succeeded, %2$d failed.</string>
+
+    <string name="toast_resolve_dir_failed">Cannot resolve the selected folder. Please pick a folder on internal storage.</string>
+    <string name="toast_password_imported">Imported. %1$d passwords in total.</string>
+    <string name="toast_import_failed">Import failed: %1$s</string>
+    <string name="toast_exported">Exported</string>
+    <string name="toast_export_failed">Export failed: %1$s</string>
+    <string name="toast_need_storage_permission">Storage permission is required. Please grant it first.</string>
+    <string name="toast_select_first">Please select the archive(s) first.</string>
+    <string name="toast_no_archives_in_folder">No supported archive found in the selected folder</string>
+    <string name="toast_select_output_dir">Please choose an output folder first.</string>
+    <string name="toast_password_added">Added to the password book</string>
+    <string name="toast_copied_to_cache">%1$s: copied to a temporary folder before extraction</string>
+    <string name="toast_imported_remember_save">Imported %1$d entries. Remember to save.</string>
+    <string name="toast_saved">Saved %1$d passwords</string>
+
+    <string name="dialog_skipped_title">These files were skipped</string>
+    <string name="dialog_failed_title">Some archives failed</string>
+    <string name="dialog_save_password_title">Add to the password book?</string>
+    <string name="dialog_save_password_message">The manual password “%1$s” worked. Save it to the password book?</string>
+    <string name="action_ok">OK</string>
+    <string name="action_add">Add</string>
+    <string name="action_no_thanks">No</string>
+
+    <!-- 错误信息 -->
+    <string name="skip_unsupported_format">%1$s (not a supported zip / 7z / rar or split archive)</string>
+    <string name="failure_entry">%1$s: %2$s</string>
+    <string name="error_no_password_available">Archive is encrypted, but the password book is empty and no manual password was given</string>
+    <string name="error_all_passwords_failed">Tried %1$d passwords, none matched</string>
+    <string name="error_encrypted_needs_password">Archive is encrypted and requires a password</string>
+    <string name="error_password_rejected">Wrong password</string>
+</resources>

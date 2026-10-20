@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UnzipKeylist</string>
+    <string name="password_book_title">密码本</string>
+
+    <!-- 权限提示 -->
+    <string name="permission_hint">需要「所有文件访问」权限，才能把解压结果写到压缩包所在目录，并读取分卷压缩包的其它分卷。</string>
+    <string name="action_grant">去授权</string>
+
+    <!-- 1. 选择压缩包 -->
+    <string name="section_select_archive">1. 选择要解压缩的文件</string>
+    <string name="action_pick_archive">文件</string>
+    <string name="action_pick_folder">文件夹</string>
+    <string name="option_include_subfolders">选择文件夹时包含子文件夹</string>
+    <string name="state_no_files_selected">未选择文件</string>
+    <string name="state_selected_one">已选择：%1$s</string>
+    <string name="state_selected_many">已选择：%1$d 个文件（%2$s）</string>
+    <string name="selected_file_item">· %1$s%2$s</string>
+    <string name="selected_file_split_tag">（%1$d 个分卷）</string>
+    <string name="selected_files_more">… 共 %1$d 个</string>
+
+    <!-- 2. 密码本 -->
+    <string name="section_password_book">2. 密码本（一行一个密码）</string>
+    <string name="password_book_summary">条目：%1$d 条（%2$s）</string>
+    <string name="action_edit_or_create">编辑 / 新建</string>
+    <string name="action_import">导入</string>
+    <string name="action_export">导出</string>
+    <string name="label_manual_password">手动密码（可选，留空则只用密码本）</string>
+    <string name="hint_manual_password">手动输入的密码</string>
+
+    <!-- 3. 解压位置 -->
+    <string name="section_output">3. 解压到哪</string>
+    <string name="option_current_dir">解压到当前目录（不创建子文件夹）</string>
+    <string name="option_custom_dir">解压到指定目录</string>
+    <string name="action_pick_dir">选择目录</string>
+    <string name="dest_dir_not_selected">未选择目录</string>
+
+    <!-- 4. 解压后处理 -->
+    <string name="section_delete_original">4. 解压成功后是否删除原文件</string>
+    <string name="option_keep_original">保留原文件</string>
+    <string name="option_delete_original">删除原文件</string>
+
+    <!-- 5. 进度 -->
+    <string name="section_progress">5. 解压进度</string>
+    <string name="progress_idle">尚未开始</string>
+    <string name="action_start">开始解压</string>
+    <string name="action_done">解压成功</string>
+
+    <!-- 密码本编辑页 -->
+    <string name="password_count">%1$d 条密码（一行一个）</string>
+    <string name="hint_password_lines">一行一个密码</string>
+    <string name="action_save">保存并返回</string>
+
+    <!-- 提示与状态 -->
+    <string name="status_preparing">准备中…</string>
+    <string name="status_checking">%1$s 正在检查 %2$s</string>
+    <string name="status_trying_password">%1$s 尝试密码 %2$d/%3$d</string>
+    <string name="status_extracting_archive">%1$s 正在解压 %2$s</string>
+    <string name="status_extracting_entry">正在解压 · %1$s</string>
+    <string name="status_progress_entry">%1$d%% · %2$s</string>
+    <string name="status_merging_split">合并分卷</string>
+    <string name="status_done_success">解压完成，成功 %1$d 个</string>
+    <string name="status_done_partial">成功 %1$d 个，失败 %2$d 个</string>
+
+    <string name="toast_resolve_dir_failed">无法解析所选目录，请选择内部存储中的目录</string>
+    <string name="toast_password_imported">已导入，当前共 %1$d 条密码</string>
+    <string name="toast_import_failed">导入失败：%1$s</string>
+    <string name="toast_exported">已导出</string>
+    <string name="toast_export_failed">导出失败：%1$s</string>
+    <string name="toast_need_storage_permission">需要存储访问权限，请先授权</string>
+    <string name="toast_select_first">请先选择要解压的压缩包</string>
+    <string name="toast_no_archives_in_folder">所选文件夹里没有找到可解压的压缩包</string>
+    <string name="toast_select_output_dir">请先选择解压输出目录</string>
+    <string name="toast_password_added">已加入密码本</string>
+    <string name="toast_copied_to_cache">%1$s：已复制到临时目录后解压</string>
+    <string name="toast_imported_remember_save">已导入 %1$d 条，记得保存</string>
+    <string name="toast_saved">已保存 %1$d 条密码</string>
+
+    <string name="dialog_skipped_title">以下文件被跳过</string>
+    <string name="dialog_failed_title">部分文件解压失败</string>
+    <string name="dialog_save_password_title">是否加入密码本？</string>
+    <string name="dialog_save_password_message">手动输入的密码「%1$s」解压成功，是否保存到密码本？</string>
+    <string name="action_ok">知道了</string>
+    <string name="action_add">加入</string>
+    <string name="action_no_thanks">不用</string>
+
+    <!-- 错误信息 -->
+    <string name="skip_unsupported_format">%1$s（不是支持的 zip / 7z / rar 或分卷包）</string>
+    <string name="failure_entry">%1$s：%2$s</string>
+    <string name="error_no_password_available">压缩包已加密，但密码本为空且未手动输入密码</string>
+    <string name="error_all_passwords_failed">已尝试 %1$d 个密码，均不正确</string>
+    <string name="error_encrypted_needs_password">压缩包已加密，需要密码</string>
+    <string name="error_password_rejected">密码错误</string>
+</resources>

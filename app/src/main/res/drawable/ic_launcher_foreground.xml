@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    adaptive icon 前景：所有图形收缩在距中心约 32dp 的范围内，
+    保证任意圆形 mask（最严格为中心直径 72dp 圆）下都完整可见。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 打开的箱子：箱体（左壁/底/右壁）+ 箱口内沿，线条勾勒表示敞开 -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M32,41 L32,71 L76,71 L76,41 M32,41 L40,35 L68,35 L76,41"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="3" />
+
+    <!-- 箱体正面：向上的空心箭头 -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M54,43 L46,55 L50,55 L50,63 L58,63 L58,55 L62,55 Z"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="miter"
+        android:strokeWidth="2" />
+</vector>
