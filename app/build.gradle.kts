@@ -21,9 +21,14 @@ android {
 
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("debug")
             optimization {
                 enable = true
-                packageScope = setOf("androidx.**", "kotlin.**", "kotlinx.**")
+                // 不要包含 kotlin.**：kotlin-stdlib 的多文件 facade 类
+                // （CollectionsKt / CollectionsKt__IterablesKt / CollectionsKt__IteratorsKt 等）
+                // 是跨包继承的链式结构，一旦被改名并重打包到不同包，
+                // 运行时会抛 IllegalAccessError: Class ... extended by class ... is inaccessible
+                packageScope = setOf("androidx.**", "kotlinx.**")
             }
         }
     }
