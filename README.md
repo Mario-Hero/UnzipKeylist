@@ -1,7 +1,7 @@
 # UnzipKeylist
 
-安卓批量解压工具，支持 ZIP / 7z / RAR 与分卷压缩，内置「一行一个密码」的可自定义密码本，逐个尝试密码直到解压成功。密码本主要用于放置用户常用的密码。
-An Android batch extraction tool for ZIP / 7z / RAR and split archives, with a built-in "one password per line" book that tries every password until extraction succeeds. The password book is primarily used to store frequently used passwords by users.
+安卓解压工具，支持 ZIP / 7z / RAR 与分卷压缩，内置可自定义密码本，逐个尝试密码直到解压成功。密码本主要用于放置用户常用的密码。
+An Android extraction tool for ZIP / 7z / RAR and split archives, with a built-in user-defined dict that tries every password until extraction succeeds. The password book is primarily used to store frequently used passwords by users.
 
 下载见Release.
 Go to "Release" to download.
